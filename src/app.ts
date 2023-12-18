@@ -1,5 +1,5 @@
 class Book {
-    constructor(protected title: string, protected author: string, protected genre: string, protected price: number) {
+    constructor(private title: string, private author: string, private genre: string, private price: number) {
     }
 
     get Title(): string {
@@ -39,7 +39,6 @@ class Book {
 }
 
 class User {
-
     constructor(private name: string, private email: string, private address: string) {
     }
 
@@ -66,7 +65,6 @@ class User {
 }
 
 class Ebook extends Book {
-
     constructor(title: string, author: string, genre: string, price: number, private format: string) {
         super(title, author, genre, price);
     }
@@ -81,16 +79,12 @@ class Ebook extends Book {
 }
 
 abstract class Payment {
-    constructor(protected amount: number) {
-        this.amount = amount;
-    }
     abstract processPayment(): void ;
 }
 
 class CreditCardPayment extends Payment {
-    constructor(amount: number, private creditCardNumber: string) {
-        super(amount);
-        this.creditCardNumber = creditCardNumber;
+    constructor(private amount: number, private creditCardNumber: string) {
+        super();
     }
     processPayment(): void {
         console.log(`Credit card payment of $${this.amount} with card number ${this.creditCardNumber}`);
@@ -98,9 +92,8 @@ class CreditCardPayment extends Payment {
 }
 
 class PayPalPayment extends Payment {
-    constructor(amount: number, private email: string) {
-        super(amount);
-        this.email = email;
+    constructor(private amount: number, private email: string) {
+        super();
     }
     processPayment(): void {
         console.log(`PayPal payment of $${this.amount} with email ${this.email}`);
