@@ -1,21 +1,20 @@
-enum BookGenre {
+export enum BookGenre {
     Fiction = "Fiction",
     NonFiction = "Non-fiction",
     Mystery = "Mystery",
     ScienceFiction = "Science Fiction",
     Romance = "Romance",
-    // Add more genres as needed
 }
 
 export default class Book {
     constructor(
-        protected title: string, 
-        protected author: string, 
-        protected genre: BookGenre, 
-        protected price: number, 
-        protected coverImage = "",
-        protected description = "",
-        protected rating = 0,) {
+        private title: string, 
+        private author: string, 
+        private genre: BookGenre, 
+        private price: number, 
+        private coverImage = "",
+        private description = "",
+        private rating = 0,) {
     }
 
     get Title(): string {
@@ -32,7 +31,7 @@ export default class Book {
         this.author = newAuthor;
     }
 
-    get Genre(): string {
+    get Genre(): BookGenre {
         return this.genre;
     }
     set Genre(newGenre: BookGenre) {
@@ -46,10 +45,34 @@ export default class Book {
         this.price = newPrice;
     }
 
+    get CoverImage(): string {
+        return this.coverImage;
+    }
+    set CoverImage(newCoverImage: string) {
+        this.coverImage = newCoverImage;
+    }
+
+    get Description(): string {
+        return this.description;
+    }
+    set Description(newDescription: string) {
+        this.description = newDescription;
+    }
+
+    get Rating(): number {
+        return this.rating;
+    }
+    set Rating(newRating: number) {
+        this.rating = newRating;
+    }
+
     displayDetails(): void {
         console.log(`Title: ${this.title}`);
         console.log(`Author: ${this.author}`);
         console.log(`Genre: ${this.genre}`);
         console.log(`Price: $${this.price}`);
+        console.log(`CoverImage: $${this.coverImage}`);
+        console.log(`Description: $${this.description}`);
+        console.log(`Rating: $${this.rating}`);
     }
 }

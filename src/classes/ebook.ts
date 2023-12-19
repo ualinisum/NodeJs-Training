@@ -1,8 +1,8 @@
-import Book from "./book";
+import Book, { BookGenre } from "./book";
 
-class Ebook extends Book {
+export default class Ebook extends Book {
 
-    constructor(title: string, author: string, genre: string, price: number, private format: string) {
+    constructor(title: string, author: string, genre: BookGenre, price: number, private format: string) {
         super(title, author, genre, price);
     }
 

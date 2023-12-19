@@ -1,9 +1,8 @@
-import Book from "./book";
+import Book from "../classes/book";
 
 export default interface CartItem {
     book: Book;
     quantity: number;
-    price: number;
     subtotal: number;
     discountVoucher: string | number ;
-  }
+}

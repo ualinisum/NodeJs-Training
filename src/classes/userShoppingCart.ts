@@ -1,7 +1,7 @@
 import Book from "./book";
-import ShoppingCart from "./shoppingCart";
+import ShoppingCart from "../interfaces/shoppingCart";
 
-class UserShoppingCart implements ShoppingCart {
+export default class UserShoppingCart implements ShoppingCart {
     private cart: Book[] = [];
 
     addBook(book: Book): void {

@@ -1,6 +1,9 @@
 export default class User {
 
-    constructor(private name: string, private email: string, private address: string,
+    constructor(
+        private name: string, 
+        private email: string, 
+        private address: string,
         private username: string,
         private password: string,
         private isLoggedIn: boolean = false) {
@@ -27,17 +30,35 @@ export default class User {
         this.address = newAddress;
     }
 
+    get Username(): string {
+        return this.username;
+    }
+    set Username(newUsername: string) {
+        this.username = newUsername;
+    }
+
+    get Password(): string {
+        return this.password;
+    }
+    set Password(newPassword: string) {
+        this.password = newPassword;
+    }
+
+
     login(username: string, password: string): void {
         if (username === this.username && password === this.password) {
             this.isLoggedIn = true;
             console.log(`User ${this.username} logged in.`);
-        } else {
-            console.log("Invalid username or password.");
+        } else if(username !== this.username){
+            console.log("Invalid username.");
+        }
+        else if(password !== this.password){
+            console.log("Invalid Password.");
         }
     }
 
     logout(): void {
         this.isLoggedIn = false;
-        console.log(`User ${this.username} logged out.`);
+        console.log(`User ${this.username} logged out successfully.`);
     }
 }
