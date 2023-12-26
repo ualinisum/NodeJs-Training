@@ -1,9 +1,7 @@
 import EventEmitter from "events";
 import PurchaseDetails from "../interfaces/purchaseDetails";
   
-  export { PurchaseDetails };
-  
-class TicketManager extends EventEmitter {
+export default class TicketManager extends EventEmitter {
   constructor() {
     super();
   }
@@ -19,4 +17,3 @@ class TicketManager extends EventEmitter {
   }
 }
 
-module.exports = TicketManager;
