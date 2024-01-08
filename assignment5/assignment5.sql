@@ -210,3 +210,18 @@ DELETE FROM cart_items WHERE cart_id = cartId;
 DELETE FROM shopping_carts WHERE cart_id = cartId;
 END //
 DELIMITER ;
+
+
+DELIMITER //
+CREATE TRIGGER after_order_placed
+AFTER INSERT ON order_items
+FOR EACH ROW
+BEGIN
+    DECLARE bookQuantity INT;
+    DECLARE newQuantity INT;
+    SELECT quantity_available INTO bookQuantity FROM books WHERE book_id = NEW.book_id;
+    SET newQuantity = bookQuantity - NEW.quantity;
+    UPDATE books SET quantity_available = newQuantity WHERE book_id = NEW.book_id;
+END;
+//
+DELIMITER ;
