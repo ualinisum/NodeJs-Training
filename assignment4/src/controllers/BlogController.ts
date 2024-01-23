@@ -4,15 +4,7 @@ import Blog from '../classes/Blog';
 const blogs: Blog[] = [];
 
 export const getAllBlogs = (req: Request, res: Response) => {
-  const blogData = blogs.map((blog) => ({
-    id: blog.getId,
-    title: blog.getTitle,
-    content: blog.getContent,
-    username: blog.getUsername,
-    views: blog.getViews,
-  }));
-
-  res.json(blogData);
+  res.json(blogs);
 };
 
 export const getBlogById = (req: Request, res: Response) => {
@@ -20,15 +12,13 @@ export const getBlogById = (req: Request, res: Response) => {
   const blog = blogs.find((b) => b.getId === blogId);
 
   if (blog) {
-    const blogData = {
+    res.json({
       id: blog.getId,
       title: blog.getTitle,
       content: blog.getContent,
       username: blog.getUsername,
       views: blog.getViews,
-    };
-
-    res.json(blogData);
+    });
   } else {
     res.status(404).json({ error: 'Blog not found' });
   }
@@ -39,15 +29,13 @@ export const createBlog = (req: Request, res: Response) => {
   const newBlog = new Blog(blogs.length + 1, title, content, username, 0);
   blogs.push(newBlog);
 
-  const blogData = {
+  res.status(201).json({
     id: newBlog.getId,
     title: newBlog.getTitle,
     content: newBlog.getContent,
     username: newBlog.getUsername,
     views: newBlog.getViews,
-  };
-
-  res.status(201).json(blogData);
+  });
 };
 
 export const updateBlog = (req: Request, res: Response) => {
@@ -59,16 +47,13 @@ export const updateBlog = (req: Request, res: Response) => {
     blog.setTitle = title;
     blog.setContent = content;
     blog.setUsername = username;
-
-    const updatedBlogData = {
+    res.json({
       id: blog.getId,
       title: blog.getTitle,
       content: blog.getContent,
       username: blog.getUsername,
       views: blog.getViews,
-    };
-
-    res.json(updatedBlogData);
+    });
   } else {
     res.status(404).json({ error: 'Blog not found' });
   }
@@ -80,16 +65,7 @@ export const deleteBlog = (req: Request, res: Response) => {
 
   if (blogIndex !== -1) {
     const deletedBlog = blogs.splice(blogIndex, 1);
-
-    const deletedBlogData = {
-      id: deletedBlog[0].getId,
-      title: deletedBlog[0].getTitle,
-      content: deletedBlog[0].getContent,
-      username: deletedBlog[0].getUsername,
-      views: deletedBlog[0].getViews,
-    };
-
-    res.json(deletedBlogData);
+    res.json({ message: 'Blog deleted successfully' });
   } else {
     res.status(404).json({ error: 'Blog not found' });
   }
