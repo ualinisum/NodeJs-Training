@@ -14,7 +14,6 @@ const getAllBooks = async (req: Request, res: Response) => {
 
 const addBook = async (req: Request, res: Response) => {
   const body = req.body;
-
   const data = await AppDataSource.createQueryBuilder()
     .insert()
     .into(Books)
@@ -28,7 +27,7 @@ const addBook = async (req: Request, res: Response) => {
     ])
     .execute();
 
-  res.json({ message: "Book added successfully", data });
+  res.json({ message: "Book Added successfully", data });
   try {
   } catch (error) {
     console.log("Error adding book:", error);
@@ -38,7 +37,6 @@ const addBook = async (req: Request, res: Response) => {
 
 const deleteBook = async (req: Request, res: Response) => {
   const { id } = req.params;
-
   const data = await AppDataSource.createQueryBuilder()
     .delete()
     .from(Books)
@@ -55,14 +53,13 @@ const deleteBook = async (req: Request, res: Response) => {
 
 const updateBook = async (req: Request, res: Response) => {
   const body = req.body;
-
   const data = await AppDataSource.createQueryBuilder()
     .update(Books)
     .set({ ...body })
     .where("id = :id", { id: 1 })
     .execute();
 
-  res.json({ message: "Book Deleted successfully", data });
+  res.json({ message: "Book Updated successfully", data });
   try {
   } catch (error) {
     console.log("Error Deleting book:", error);
