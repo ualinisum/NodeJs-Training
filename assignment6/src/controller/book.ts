@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { AppDataSource } from "../config/db";
 import { Books } from "../entities/Book";
+import { authorizeBookAuthor } from "../middleware/authMiddleware";
 
 const getAllBooks = async (req: Request, res: Response) => {
   try {
@@ -20,7 +21,7 @@ const addBook = async (req: Request, res: Response) => {
     .values([
       {
         title: body.title,
-        author: body.author,
+        authorId: body.authorId,
         price: body.price,
         quantity_available: body.quantity_available,
       },
@@ -36,15 +37,17 @@ const addBook = async (req: Request, res: Response) => {
 };
 
 const deleteBook = async (req: Request, res: Response) => {
-  const { id } = req.params;
-  const data = await AppDataSource.createQueryBuilder()
-    .delete()
-    .from(Books)
-    .where("id = :id", { id })
-    .execute();
-
-  res.json({ message: "Book Deleted successfully", data });
   try {
+    await authorizeBookAuthor(req, res, async () => {
+      const { id } = req.params;
+      const data = await AppDataSource.createQueryBuilder()
+        .delete()
+        .from(Books)
+        .where("id = :id", { id })
+        .execute();
+
+      res.json({ message: "Book Deleted successfully", data });
+    });
   } catch (error) {
     console.log("Error Deleting book:", error);
     res.status(500).json({ error: "Internal Server Error" });
@@ -52,17 +55,19 @@ const deleteBook = async (req: Request, res: Response) => {
 };
 
 const updateBook = async (req: Request, res: Response) => {
-  const body = req.body;
-  const data = await AppDataSource.createQueryBuilder()
-    .update(Books)
-    .set({ ...body })
-    .where("id = :id", { id: 1 })
-    .execute();
-
-  res.json({ message: "Book Updated successfully", data });
   try {
+    await authorizeBookAuthor(req, res, async () => {
+      const body = req.body;
+      const data = await AppDataSource.createQueryBuilder()
+        .update(Books)
+        .set({ ...body })
+        .where("id = :id", { id: 1 })
+        .execute();
+
+      res.json({ message: "Book Updated successfully", data });
+    });
   } catch (error) {
-    console.log("Error Deleting book:", error);
+    console.log("Error Updating book:", error);
     res.status(500).json({ error: "Internal Server Error" });
   }
 };

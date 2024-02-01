@@ -9,7 +9,7 @@ export class Books {
   title: string;
 
   @Column({ type: "varchar", length: 200 })
-  author: string;
+  authorId: number;
 
   @Column({
     type: "decimal",
