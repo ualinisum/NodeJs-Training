@@ -6,6 +6,7 @@ import {
   blogValidationSchema,
   paramIdValidationSchema,
 } from "../validations/blog";
+import { BlogQueries } from "../interfaces/BlogQuery";
 
 const getAllBlogs = async (req: Request, res: Response) => {
   try {
@@ -15,7 +16,7 @@ const getAllBlogs = async (req: Request, res: Response) => {
 
       getBlogByQuery(query)
         .then((data) => res.status(200).json({ data }))
-        .catch((error: any) => res.status(400).json({ message: error }));
+        .catch((error: Error) => res.status(400).json({ message: error }));
     } else {
       const data = await Blog.find();
 
@@ -26,7 +27,7 @@ const getAllBlogs = async (req: Request, res: Response) => {
   }
 };
 
-const getBlogByQuery = async (queries: any) => {
+const getBlogByQuery = async (queries: BlogQueries) => {
   const { mostRecent, mostPopular, mostInteraction } = queries;
 
   if (mostRecent) {
