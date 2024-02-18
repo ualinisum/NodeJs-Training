@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Assignment 11</title>
+  </head>
+  <body>
+    <input type="text" id="messageBox" />
+    <button type="button" id="messageButton">Send Message</button>
+    <div id="messagePara"></div>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+      const socket = io();
+      const messageButton = document.getElementById("messageButton");
+      const messageBox = document.getElementById("messageBox");
+      const messagePara = document.getElementById("messagePara");
+
+      const messageFun = () => {
+        const message = messageBox.value;
+        console.log(message);
+        socket.emit("user-message", message);
+      };
+
+      socket.on("message", (message) => {
+        const socketID = socket.id;
+        const para = document.createElement("p");
+        para.innerText = message.message;
+        message.id === socketID &&
+          para.setAttribute("style", "background-color: red");
+        messagePara.appendChild(para);
+      });
+
+      messageButton.addEventListener("click", messageFun);
+    </script>
+  </body>
+</html>
